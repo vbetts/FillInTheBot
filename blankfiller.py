@@ -44,22 +44,22 @@ class BlankFiller:
         
         while True:
             #For each loop, select a new random number for each blank
-            nounNum = random.randint(0, len(self.nouns))
-            verbNum = random.randint(0, len(self.verbs))
-            actionNum = random.randint(0, len(self.actions))
-            adjNum = random.randint(0, len(self.adjectives))
-            anNum = random.randint(0, len(self.animals))
-            colNum = random.randint(0, len(self.colours))
-            spNum = random.randint(0, len(self.sports))
+            nounNum = random.randint(0, len(self.nouns)-1)
+            verbNum = random.randint(0, len(self.verbs)-1)
+            actionNum = random.randint(0, len(self.actions)-1)
+            adjNum = random.randint(0, len(self.adjectives)-1)
+            anNum = random.randint(0, len(self.animals)-1)
+            colNum = random.randint(0, len(self.colours)-1)
+            spNum = random.randint(0, len(self.sports)-1)
             
             #Find each incidence of the word key and replace it with a randomly generated word from each list
-            text = sentence.replace('[n]', self.nouns[nounNum], 1)\
-                .replace('[ad]', self.adjectives[adjNum], 1)\
-                .replace('[v]', self.verbs[verbNum], 1)\
-                .replace('[ac]', self.actions[actionNum], 1)\
-                .replace('[an]', self.animals[anNum], 1)\
-                .replace('[c]', self.colours[colNum], 1)\
-                .replace('[s]', self.sports[spNum], 1)
+            text = sentence.replace('[n]', '[' + self.nouns[nounNum] + ']', 1)\
+                .replace('[ad]', '[' + self.adjectives[adjNum] + ']', 1)\
+                .replace('[v]', '[' + self.verbs[verbNum] + ']', 1)\
+                .replace('[ac]', '[' + self.actions[actionNum] + ']', 1)\
+                .replace('[an]', '[' + self.animals[anNum] + ']', 1)\
+                .replace('[c]', '[' + self.colours[colNum] + ']', 1)\
+                .replace('[s]', '[' + self.sports[spNum] + ']', 1)
             if text == sentence:
                 break
             sentence = text

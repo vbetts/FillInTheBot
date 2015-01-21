@@ -26,6 +26,22 @@ auth.set_access_token(access_token, access_token_secret)
 twitterApi = API(auth)
 
 class ReplyToTweet(StreamListener):
+    
+    def stripPrefix(self, sentence, prefix):
+        if sentence.lower().startswith(prefix.lower()):
+            return sentence[len(prefix):]
+        else:
+            return ''
+    
+    def make_reply(self, tweet, user):
+        template = self.stripPrefix(tweet, '@' + account_screen_name + ' ')
+        if template == '':
+            return ''
+        replyText = '.@' + user + ' ' + bfill.fill_in_the_blanks(template)
+        #check if repsonse is over 140 char
+        if len(replyText) > 140:
+            replyText = replyText[0:137] + '...'
+        return replyText
 
     def on_data(self, data):
         print (data)
@@ -39,13 +55,9 @@ class ReplyToTweet(StreamListener):
             tweetId = tweet.get('id_str')
             screenName = tweet.get('user',{}).get('screen_name')
             tweetText = tweet.get('text')
-
-            replyText = '.@' + screenName + ' ' + bfill.fill_in_the_blanks(tweetText)
-
-            #check if repsonse is over 140 char
-            if len(replyText) > 140:
-                replyText = replyText[0:137] + '...'
-
+            replyText = self.make_reply(tweetText, screenName)
+            if replyText == '':
+                return
             print('Tweet ID: ' + tweetId)
             print('From: ' + screenName)
             print('Tweet Text: ' + tweetText)
