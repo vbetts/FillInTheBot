@@ -35,11 +35,15 @@ class ReplyToTweet(StreamListener):
     
     def make_reply(self, tweet, user):
         template = self.stripPrefix(tweet, '@' + account_screen_name + ' ')
-        replyText = '.@' + user + ' ' + bfill.fill_in_the_blanks(template)
+        completed_sentence = bfill.fill_in_the_blanks(template)
+        if completed_sentence == template:
+            return ''
+        else:
+            replyText = '.@' + user + ' ' + completed_sentence
         #check if repsonse is over 140 char
-        if len(replyText) > 140:
-            replyText = replyText[0:137] + '...'
-        return replyText
+            if len(replyText) > 140:
+                replyText = replyText[0:137] + '...'
+            return replyText
 
     def on_data(self, data):
         print (data)
@@ -54,15 +58,16 @@ class ReplyToTweet(StreamListener):
             screenName = tweet.get('user',{}).get('screen_name')
             tweetText = tweet.get('text')
             replyText = self.make_reply(tweetText, screenName)
-            if replyText == '':
-                return
+            
+            
             print('Tweet ID: ' + tweetId)
             print('From: ' + screenName)
             print('Tweet Text: ' + tweetText)
             print('Reply Text: ' + replyText)
 
-            # If rate limited, the status posts should be queued up and sent on an interval
-            twitterApi.update_status(replyText, tweetId)
+            if replyText != '':
+                # If rate limited, the status posts should be queued up and sent on an interval
+                twitterApi.update_status(replyText, tweetId)
 
     def on_error(self, status):
         print (status)
