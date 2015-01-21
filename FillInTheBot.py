@@ -31,12 +31,10 @@ class ReplyToTweet(StreamListener):
         if sentence.lower().startswith(prefix.lower()):
             return sentence[len(prefix):]
         else:
-            return ''
+            return sentence
     
     def make_reply(self, tweet, user):
         template = self.stripPrefix(tweet, '@' + account_screen_name + ' ')
-        if template == '':
-            return ''
         replyText = '.@' + user + ' ' + bfill.fill_in_the_blanks(template)
         #check if repsonse is over 140 char
         if len(replyText) > 140:
