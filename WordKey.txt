@@ -1,0 +1,7 @@
+[v] = verb
+[n] = noun
+[ac] = action
+[ad] = adjective
+[an] = animal
+[c] = colour
+[s] = sport
