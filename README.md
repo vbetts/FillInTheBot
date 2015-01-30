@@ -9,5 +9,5 @@ So your sentence should look like: The [n] [v]ed the [ad] [an]
 
 twitter.com/FillInTheBot
 
-![SampleScreencap](FillInTheBot/`FillInTheBot_sample`.jpg)
+![SampleScreencap](FillInTheBot\`FillInTheBot_sample`.jpg)
 Format: ![Alt Text](Fill In The Bot Screencap)
